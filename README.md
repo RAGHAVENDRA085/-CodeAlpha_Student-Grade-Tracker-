@@ -27,8 +27,7 @@ This application provides a complete solution for tracking, managing, and analyz
 - 🔹 **OOP Architecture:** Separated into `Model` (Student), `Controller` (GradeTracker), and `View` (Main App) for maintainability and scalability.
 
 ## 🏗️ Project Structure
-student-grade-tracker/
-├── 📁 src/
+student-grade-tracker
 │   ├── 📄 StudentGradeTrackerApp.java   # 🖥️ Main UI, Menu Navigation & Input Validation
 │   ├── 📄 GradeTracker.java             # 📊 Controller: Manages student list & class-wide stats
 │   └── 📄 Student.java                  # 📝 Model: Encapsulates student data & grade calculations
