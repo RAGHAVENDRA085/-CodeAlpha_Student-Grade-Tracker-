@@ -1,35 +1,45 @@
-# 📊 Student Grade Tracker
+# 🎓 Student Grade Tracker Pro
 
-> A robust, console-based Java application for managing student records and calculating academic performance metrics in real-time.
+[![Java](https://img.shields.io/badge/Java-16%2B-orange?logo=openjdk&logoColor=white)](https://openjdk.java.net/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Architecture](https://img.shields.io/badge/Pattern-MVC-green)]()
+[![Status](https://img.shields.io/badge/Status-Production--Ready-brightgreen)]()
 
-[![Java](https://img.shields.io/badge/Java-8%2B-blue)](https://www.java.com)
-[![License](https://img.shields.io/badge/License-MIT-green)]()
-[![Build](https://img.shields.io/badge/Status-Passing-success)]()
+> A production-grade Java application for tracking student academic performance. Demonstrates immutable data modeling, single-pass stream optimization, zero-dependency JSON persistence, and defensive MVC architecture using modern Java 16+ features.
 
-## 📌 About This Project
-This application provides a complete solution for tracking, managing, and analyzing student grades. Designed with **Object-Oriented Programming (OOP)** principles, it features a clean console interface, dynamic data storage, input validation, and automated statistical reporting. Ideal for academic submissions, coursework, or portfolio demonstrations.
+## ✅ Project Requirements Fulfillment
 
-## ✅ Requirement Mapping (All 5 Tasks Implemented)
+This project was built to satisfy the following specifications:
 
-| # | Task Requirement | Implementation Details |
-|---|------------------|------------------------|
-| **1** | Input & manage student grades | Interactive CLI with `Scanner`-driven workflows for adding students and assigning multiple grades per student. |
-| **2** | Calculate average, highest & lowest scores | Real-time computation using `Collections.max()`, `Collections.min()`, and arithmetic averaging. Applies to both individual students and the entire class. |
-| **3** | Use arrays or ArrayLists | Dynamic `ArrayList<Double>` for grades and `ArrayList<Student>` for student records. Eliminates fixed-size limitations and scales automatically. |
-| **4** | Display summary report of all students | Formatted ASCII tabular report (Option 4) showing per-student metrics and aggregate class statistics. |
-| **5** | Console-based or GUI interface | Polished, user-friendly **Console UI** with structured menus, clear prompts, and graceful input handling. |
+| Requirement | Implementation | Location |
+| :--- | :--- | :--- |
+| **Input and manage student grades** | Full CRUD: add students, add/edit/delete course grades with model-layer validation | `StudentGradeTrackerApp.java`, `Student.java` |
+| **Calculate average, highest, and lowest scores** | Single-pass `DoubleSummaryStatistics` computes all three metrics simultaneously per student and per class | `Student.getStats()`, `GradeTracker.getClassStats()` |
+| **Use arrays or ArrayLists to store and manage data** | `ArrayList<CourseGrade>` inside each `Student`; `ArrayList<Student>` inside `GradeTracker`; exposed as unmodifiable lists for safety | `Student.java`, `GradeTracker.java` |
+| **Display a summary report of all students** | Formatted console table showing ID, name, course count, average, letter grade, highest, and lowest for every student plus class-wide aggregates | `viewClassSummary()` in `StudentGradeTrackerApp.java` |
+| **Console-based or GUI-based interface** | Console-based interactive menu with emoji indicators, aligned tables, input validation loops, and safe `System.in` handling | `StudentGradeTrackerApp.java` |
 
-## 🌟 Key Features
-- 🔹 **Dynamic Data Storage:** Uses `ArrayList` for unlimited student & grade capacity.
-- 🔹 **Real-Time Analytics:** Instantly calculates averages, highest, and lowest scores.
-- 🔹 **Robust Input Validation:** Prevents crashes from non-numeric input, enforces `0.0–100.0` grade boundaries, and handles empty submissions gracefully.
-- 🔹 **Clean Console UI:** Professionally formatted tables, clear `[Success]`/`[Error]` messages, and intuitive navigation.
-- 🔹 **OOP Architecture:** Separated into `Model` (Student), `Controller` (GradeTracker), and `View` (Main App) for maintainability and scalability.
+## ✨ Features Beyond Requirements
 
-## 🏗️ Project Structure
-student-grade-tracker
-│   ├── 📄 StudentGradeTrackerApp.java   # 🖥️ Main UI, Menu Navigation & Input Validation
-│   ├── 📄 GradeTracker.java             # 📊 Controller: Manages student list & class-wide stats
-│   └── 📄 Student.java                  # 📝 Model: Encapsulates student data & grade calculations
-├── 📄 README.md                         # 📖 Project documentation & setup guide
-└── 📄 .gitignore                        # 🚫 Excludes compiled .class files & IDE configs
+| Feature | Description |
+| :--- | :--- |
+| **Letter Grades** | Automatic A/B/C/D/F mapping displayed in all reports and summaries |
+| **Fuzzy Search** | Case-insensitive partial name matching across the entire student roster |
+| **JSON Persistence** | Auto-save/load to `students.json` on every mutation — no external libraries |
+| **Edit & Delete** | Modify or remove individual course grades without re-entering all data |
+| **Model Validation** | Score bounds & duplicate checks enforced at model layer; invalid state impossible |
+| **Safe I/O** | Never closes `System.in`; robust input loops with type-safe parsing |
+
+## 🏗️ Architecture
+
+```text
+┌─────────────────────────────────┐
+│   StudentGradeTrackerApp (UI)   │ ← Console I/O, Menu Routing, Input Helpers
+├─────────────────────────────────┤
+│      GradeTracker (Manager)     │ ← ArrayList Storage, Search, Analytics, Persistence
+├─────────────────────────────────┤
+│  Student (Model)                │ ← ArrayList<CourseGrade>, validated mutations
+│  CourseGrade (Record)           │ ← Immutable validated value object
+│  StudentStats / ClassStats      │ ← Computed aggregate records (avg/high/low)
+│  LetterGrade (Enum)             │ ← Score-to-grade threshold mapping
+└─────────────────────────────────┘
